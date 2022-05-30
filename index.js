@@ -9,6 +9,7 @@ const authRoute = require("./routes/auth");
 const postRoute = require("./routes/posts");
 const path = require("path");
 
+const PORT = process.env.PORT || 8800;
 dotenv.config();
 
 // mongoose.connect(process.env.MONGO_URL, {useNewURLParser: true}, () => {
@@ -31,10 +32,14 @@ app.use("/api/users", userRoute);
 app.use("/api/auth", authRoute);
 app.use("/api/posts", postRoute);
 
+// if (process.env.NODE_ENV === "production"){
+
+// }
 app.use(express.static(path.join(__dirname, "/client/build")));
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '/client/build', 'index.html'));
 });
-app.listen(process.env.PORT || 8800, () => {
+
+app.listen(PORT, () => {
     console.log("backend server is running at port 8800" )
 });
