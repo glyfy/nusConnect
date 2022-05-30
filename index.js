@@ -10,9 +10,16 @@ const postRoute = require("./routes/posts");
 
 dotenv.config();
 
-mongoose.connect(process.env.MONGO_URL, {useNewURLParser: true}, () => {
-    console.log("Connected to MongoDB");
-});
+// mongoose.connect(process.env.MONGO_URL, {useNewURLParser: true}, () => {
+//     console.log("Connected to MongoDB");
+// });
+mongoose.connect('mongodb+srv://glyfy:glyfy@cluster0.j2bnm.mongodb.net/orbital?retryWrites=true&w=majority', 
+        {useNewUrlParser: true});
+         mongoose.connection.once('open', function(){
+         console.log('Conection has been made!');
+             }).on('error', function(error){
+          console.log('Error is: ', error);
+           });
 
 //middleware
 app.use(express.json());
@@ -22,8 +29,8 @@ app.use(morgan("common"));
 app.use("/api/users", userRoute);
 app.use("/api/auth", authRoute);
 app.use("/api/posts", postRoute);
-app.use(express.static(path.join(__dirname, "/client/build")));
 
+app.use(express.static(path.join(__dirname, "/client/build")));
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '/client/build', 'index.html'));
 });
