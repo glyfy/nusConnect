@@ -30,6 +30,6 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '/client/build', 'index.html'));
 });
 
-app.listen(prcoess.env.PORT || 8800, () => {
+app.listen(process.env.PORT || 8800, () => {
     console.log("backend server is running at port 8800" )
 });
