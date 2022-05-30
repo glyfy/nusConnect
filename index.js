@@ -7,21 +7,12 @@ const morgan = require('morgan');
 const userRoute = require('./routes/users');
 const authRoute = require("./routes/auth");
 const postRoute = require("./routes/posts");
-const path = require("path");
 
-const PORT = process.env.PORT || 8800;
 dotenv.config();
 
-// mongoose.connect(process.env.MONGO_URL, {useNewURLParser: true}, () => {
-//     console.log("Connected to MongoDB");
-// });
-mongoose.connect('mongodb+srv://glyfy:glyfy@cluster0.j2bnm.mongodb.net/orbital?retryWrites=true&w=majority', 
-        {useNewUrlParser: true});
-         mongoose.connection.once('open', function(){
-         console.log('Conection has been made!');
-             }).on('error', function(error){
-          console.log('Error is: ', error);
-           });
+mongoose.connect(process.env.MONGO_URL, {useNewURLParser: true}, () => {
+    console.log("Connected to MongoDB");
+});
 
 //middleware
 app.use(express.json());
@@ -32,14 +23,12 @@ app.use("/api/users", userRoute);
 app.use("/api/auth", authRoute);
 app.use("/api/posts", postRoute);
 
-// if (process.env.NODE_ENV === "production"){
-
-// }
 app.use(express.static(path.join(__dirname, "/client/build")));
+
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '/client/build', 'index.html'));
 });
 
-app.listen(PORT, () => {
+app.listen(prcoess.env.PORT || 8800, () => {
     console.log("backend server is running at port 8800" )
 });
