@@ -10,7 +10,7 @@ const postRoute = require("./routes/posts");
 
 dotenv.config();
 
-mongoose.connect(process.env.MONGO_URL, {useNewURLParser: true}, () => {
+mongoose.connect('mongodb+srv://glyfy:glyfy@cluster0.j2bnm.mongodb.net/orbital?retryWrites=true&w=majority', {useNewURLParser: true}, () => {
     console.log("Connected to MongoDB");
 });
 
