@@ -22,7 +22,11 @@ app.use(morgan("common"));
 app.use("/api/users", userRoute);
 app.use("/api/auth", authRoute);
 app.use("/api/posts", postRoute);
+app.use(express.static(path.join(__dirname, "/client/build")));
 
-app.listen(8800, () => {
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '/client/build', 'index.html'));
+});
+app.listen(process.env.PORT || 8800, () => {
     console.log("backend server is running at port 8800" )
 });
